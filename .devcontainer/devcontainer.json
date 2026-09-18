@@ -19,7 +19,7 @@
 }
 },
 
-"postCreateCommand": "pwsh -NoProfile -Command "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted; Install-Module -Name Az -Force -Scope CurrentUser; az bicep install"",
+"postCreateCommand": "bash .devcontainer/setup.sh",
 
 "remoteUser": "vscode"
 }
