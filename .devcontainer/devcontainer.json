@@ -1,20 +1,17 @@
 {
 "name": "Azure 104 & Terraform Complete Lab",
-
 "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 
 "features": {
 "ghcr.io/devcontainers/features/azure-cli:1": {},
-"ghcr.io/devcontainers/features/terraform:1": {
-"version": "latest"
-},
+"ghcr.io/devcontainers/features/terraform:1": {},
 "ghcr.io/devcontainers/features/powershell:1": {}
 },
 
 "customizations": {
 "vscode": {
 "extensions": [
-"ms-vscode.PowerShell",
+"ms-vscode.powershell",
 "ms-azuretools.vscode-bicep",
 "ms-vscode.azurecli",
 "HashiCorp.terraform"
@@ -22,7 +19,7 @@
 }
 },
 
-"postCreateCommand": "pwsh -Command "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted; Install-Module -Name Az -Force -Scope CurrentUser; az bicep install"",
+"postCreateCommand": "pwsh -NoProfile -Command "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted; Install-Module -Name Az -Force -Scope CurrentUser; az bicep install"",
 
 "remoteUser": "vscode"
 }
