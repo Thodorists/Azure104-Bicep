@@ -2,7 +2,7 @@
   "name": "Azure & Terraform DevOps Codespace",
   "image": "://microsoft.com",
   
-  # Εγκατάσταση των απαραίτητων εργαλείων (Features) κατά τη δημιουργία του Codespace
+ 
   "features": {
     "ghcr.io/devcontainers/features/powershell:1": {
       "version": "latest"
@@ -15,7 +15,7 @@
     }
   },
 
-  # Αυτόματη εγκατάσταση των επίσημων VS Code Extensions για καλύτερο development
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -27,6 +27,6 @@
     }
   },
 
-  # Εκτέλεση εντολής ΑΜΕΣΩΣ μόλις δημιουργηθεί το Codespace (εγκατάσταση του Az Module στο PowerShell)
-  "postCreateCommand": "pwsh -Command \"Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser\""
+
+ "postCreateCommand": "pwsh -Command \"Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser\""
 }
