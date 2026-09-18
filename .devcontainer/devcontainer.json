@@ -1,18 +1,6 @@
 {
-  "name": "Azure, Bicep & Terraform DevOps Codespace",
-  "image": "://microsoft.com",
-  
-  "features": {
-    "ghcr.io/devcontainers/features/powershell:1": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/azure-cli:1": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/terraform:1": {
-      "version": "latest"
-    }
-  },
+  "name": "Azure 104 & Terraform Complete Lab",
+  "image": "mcr.microsoft.com/azure-cli:latest",
 
   "customizations": {
     "vscode": {
@@ -25,5 +13,5 @@
     }
   },
 
-  "postCreateCommand": "pwsh -Command \"Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser\""
+  "postCreateCommand": "az bicep install && pwsh -Command \"Set-PSRepository -Name PSGallery -InstallationPolicy Trusted; Install-Module -Name Az -Force -Scope CurrentUser\""
 }
