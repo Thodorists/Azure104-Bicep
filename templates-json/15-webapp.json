@@ -1,0 +1,42 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "functions": [],
+    "variables": {},
+    "resources": [
+     {
+        "name": "asp-web-dev-plan-01",
+        "type": "Microsoft.Web/serverfarms",
+        "kind": "linux",
+        "apiVersion": "2024-11-01",
+        "location": "centralus",
+        "sku": {
+            "name": "F1",
+            "capacity": 1
+        },
+        "properties": {
+            "name": "asp-web-dev-plan-01",
+            "reserved": true
+        }
+     },
+  {
+    "name": "app-web-dev-01",
+    "type": "Microsoft.Web/sites",
+    "kind":"app,linux",
+    "apiVersion": "2024-11-01",
+    "location": "centralus",
+    "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', 'asp-web-dev-plan-01')]"
+    ],
+    "properties": {
+        "name": "app-web-dev-01",
+        "siteConfig": {
+                    "linuxFxVersion": "PHP|8.3"       
+                },
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', 'asp-web-dev-plan-01')]"
+    }
+  }
+    ],
+    "outputs": {}
+}

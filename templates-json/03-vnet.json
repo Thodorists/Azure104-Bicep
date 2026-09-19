@@ -1,0 +1,44 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "functions": [],
+    "variables": {},
+    "resources": [
+
+        {
+            "name": "vnet-dev-eus-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2024-07-01",
+            "location": "eastus",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "snet-dev-eus-web-01",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/24",
+                            "networkSecurityGroup":{
+                            "id":"[resourceId('Microsoft.Network/networkSecurityGroups','nsg-az104-shared-eus-01')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "snet-dev-eus-db-01",
+                        "properties": {
+                            "addressPrefix": "10.0.1.0/24",
+                            "networkSecurityGroup":{
+                            "id":"[resourceId('Microsoft.Network/networkSecurityGroups','nsg-az104-shared-eus-01')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}

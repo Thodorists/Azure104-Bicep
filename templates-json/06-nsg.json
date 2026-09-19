@@ -1,0 +1,58 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "functions": [],
+    "variables": {
+        "nsgName": "nsg-az104-shared-eus-01",
+        "rulesshName": "in-allow-ssh-admin",
+        "rulesshPriority": 400,
+        "sshPort": "22",
+        "svcTagInternet": "Internet",
+    "httpDestIp": "10.0.0.4",
+    "httpPort": "80",
+    "ruleHttpName": "in-allow-http-from-internet-to-10-0-0-4",
+    "ruleHttpPriority": 410
+    },
+    "resources": [
+        {
+            "name": "[variables('nsgName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2024-07-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "[variables('rulesshName')]",
+                        "properties": {
+                            "description": "[variables('rulesshName')]",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "[variables('sshPort')]",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": "[variables('rulesshPriority')]",
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "[variables('ruleHttpName')]",
+                        "properties": {
+                            "description": "[variables('ruleHttpName')]",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "[variables('httpPort')]",
+                            "sourceAddressPrefix": "[variables('svcTagInternet')]",
+                            "destinationAddressPrefix": "[variables('httpDestIp')]",
+                            "access": "Allow",
+                            "priority": "[variables('ruleHttpPriority')]",
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}
