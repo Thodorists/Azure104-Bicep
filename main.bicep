@@ -1,6 +1,9 @@
 param location string
 param vnet object
+param sa object
 
+//to vnet object einai to object tou param file pou exeis dilwsei aftoto main arxeio 
+//vnet.name einai to name tou object tou param poy to dineis sto vnet.bicep resource
 module devvnet 'bicepWithModules/modules/network/vnet.bicep' = {
   name: 'dev-network'
   params: {
@@ -8,5 +11,15 @@ module devvnet 'bicepWithModules/modules/network/vnet.bicep' = {
     location: location
     addressPrefixes: vnet.addressPrefixes
     subnets: vnet.subnets
+  }
+}
+
+module storage 'bicepWithModules/modules/storage/storage.bicep' = {
+  name: 'dev_storage'
+  params: {
+    name: sa.name
+    location: sa.location
+    sku: sa.sku
+    kind: sa.kind
   }
 }

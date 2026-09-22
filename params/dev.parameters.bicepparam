@@ -1,20 +1,28 @@
-using '../bicepWithModules/modules/network/vnet.bicep'
+using '../main.bicep'
 
 param location = 'polandcentral'
 
-param name = 'vnet1'
 
-param addressPrefixes = ['10.0.0.0/16']
+param vnet = {
+  name: 'vnet1'
+  addressPrefixes: [
+    '10.0.0.0/16'
+  ]
+  subnets: [
+    {
+      name: 'subnetWeb'
+      prefix: '10.0.0.0/24'
+    }
+    {
+      name: 'subnetDb'
+      prefix: '10.0.1.0/24'
+    }
+  ]
+}
 
-param subnets = [
-  {
-    name: 'subnetWeb'
-    prefix: '10.0.0.0/24'
-  }
-  {
-    name: 'subnetDb'
-    prefix: '10.0.1.0/24'
-  }
-]
-
-
+param sa = {
+  name: '0storageaccount1'
+  location: location
+  sku: 'Standard_LRS'
+  kind: 'StorageV2'
+}
