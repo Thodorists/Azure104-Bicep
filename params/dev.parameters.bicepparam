@@ -26,3 +26,37 @@ param sa = {
   sku: 'Standard_LRS'
   kind: 'StorageV2'
 }
+
+
+param nsg = {
+  name: 'web-nsg'
+  location: location
+  securityRules: [
+    {
+      name: 'allow-rdp-admin'
+      properties: {
+        priority: 100
+        protocol: 'Tcp'
+        access: 'Allow'
+        direction: 'Inbound'
+        sourceAddressPrefix: '*'
+        sourcePortRange: '*'
+        destinationAddressPrefix: '*'
+        destinationPortRange: '3339'
+      }
+    }
+    {
+      name: 'allow-ssh'
+      properties: {
+        priority: 400
+        protocol: 'Tcp'
+        access: 'Allow'
+        direction: 'Inbound'
+        destinationPortRange: '22'
+        sourceAddressPrefix: 'Internet'
+        sourcePortRange: '*'
+        destinationAddressPrefix: '10.0.1.4'
+      }
+    }
+  ]
+}

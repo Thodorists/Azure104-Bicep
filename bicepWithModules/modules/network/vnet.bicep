@@ -10,6 +10,9 @@ param addressPrefixes array
 @description('subnets in vnet')
 param subnets array
 
+@description('name of nsg')
+param nsgName string
+
 resource vnet 'Microsoft.Network/virtualNetworks@2025-09-01' = {
   name: name
   location: location
@@ -19,9 +22,13 @@ resource vnet 'Microsoft.Network/virtualNetworks@2025-09-01' = {
       for subnet in subnets : {
         name: subnet.name
         properties: {
+          networkSecurityGroup:{id: nsg.id}
           addressPrefix: subnet.prefix
         }
       }
     ]
   }
+}
+resource nsg 'Microsoft.Network/networkSecurityGroups@2025-09-01' existing = {
+  name: nsgName
 }
