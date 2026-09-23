@@ -32,3 +32,9 @@ resource vnet 'Microsoft.Network/virtualNetworks@2025-09-01' = {
 resource nsg 'Microsoft.Network/networkSecurityGroups@2025-09-01' existing = {
   name: nsgName
 }
+
+output subnetWebId string = resourceId(
+  'Microsoft.Network/virtualNetworks/subnets',
+  vnet.name,
+  'subnetWeb'
+)

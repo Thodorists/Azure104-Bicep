@@ -2,7 +2,6 @@ using '../main.bicep'
 
 param location = 'polandcentral'
 
-
 param vnet = {
   name: 'vnet1'
   addressPrefixes: [
@@ -41,8 +40,11 @@ param nsg = {
         direction: 'Inbound'
         sourceAddressPrefix: '*'
         sourcePortRange: '*'
-        destinationAddressPrefix: '*'
-        destinationPortRange: '3339'
+        destinationAddressPrefixes: [
+          '10.0.0.4'
+          '10.0.0.5'
+        ]
+        destinationPortRange: '3389'
       }
     }
     {
@@ -60,3 +62,19 @@ param nsg = {
     }
   ]
 }
+
+
+param vm = {
+  baseName: 'web'
+  location: location
+  size: 'Standard_B2ats_v2'
+  username: 'azureadmin'
+  count: 2
+}
+
+param vmPassword = az.getSecret(
+  '484a8583-4b41-4857-9f62-7e5676283498',
+  'rg-poland-central',
+  'project-az104',
+  'WindowsMachine'
+)
