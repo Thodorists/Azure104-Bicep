@@ -13,6 +13,7 @@ param subnets array
 @description('name of nsg')
 param nsgName string
 
+
 resource vnet 'Microsoft.Network/virtualNetworks@2025-09-01' = {
   name: name
   location: location
@@ -49,3 +50,4 @@ output bastionSubnetId string = resourceId(
     id:resourceId('Microsoft.Network/virtualNetworks/subnets', name, s.name)
   }
 ]*/
+

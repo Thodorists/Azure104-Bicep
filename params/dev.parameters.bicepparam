@@ -2,7 +2,7 @@ using '../main.bicep'
 
 param location = 'polandcentral'
 param deployBastion = false
-param deployLoadBalancer = false
+param deployLoadBalancer = true
 
 param vnet = {
   name: 'vnet1'
@@ -106,3 +106,31 @@ param ilb = {
   probePath: '/'
   ruleName: 'lbr-http-80'
 }
+param vnetTest = {
+  name: 'vnetTest'
+  location: location
+  addressPrefixes: [
+    '10.1.0.0/16'
+  ]
+  subnets: [
+  {
+      name: 'subnetTest'
+      prefix: '10.1.5.0/24'
+  }]
+
+}
+param vmTest = {
+  baseName: 'test'
+  location: location
+  size: 'Standard_D2s_v3'
+  username: 'azureadmin'
+
+}
+
+param vmTestPassword = az.getSecret(
+  '484a8583-4b41-4857-9f62-7e5676283498',
+  'rg-poland-central',
+  'project-az104',
+  'WindowsMachine'
+)
+

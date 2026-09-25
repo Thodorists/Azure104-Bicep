@@ -14,44 +14,37 @@ param username string = 'azureadmin'
 @description('password of vm using keyvault ')
 param password string
 
-@description('how many vms we create')
-param count int
+param nicId string
+/*@description('nic id for vm ')
+param nicid string*/
 
-@description('target subnet id ')
-param subnetId string
 
-param lbBackendPoolId string
-
-var indexes = [for i in range(1,count):i]
-var vmNames = [for i in indexes: 'vm-${baseName}-${i}']
-var nicNames = [for i in indexes: 'nic-${baseName}-${i}']
-
-resource nics 'Microsoft.Network/networkInterfaces@2025-09-01' = [for (nicName, i) in nicNames: {
-  name: nicName
+/*resource nic 'Microsoft.Network/networkInterfaces@2025-09-01' = {
+  name: 'nicTest'
   location: location
   properties: {
     ipConfigurations: [{
       name: 'ipconfig1'
       properties: { 
         privateIPAllocationMethod: 'Dynamic'
-        subnet: {id: subnetId }
-        loadBalancerBackendAddressPools:[
-          {id:lbBackendPoolId}
-        ]
+        subnet: {
+          id: subnetId
+        }
       }
     }]
   }
-}]
+}*/
 
-resource vm 'Microsoft.Compute/virtualMachines@2026-04-01' = [ for (vmName, i) in vmNames: {
-  name: vmName
+
+resource vm 'Microsoft.Compute/virtualMachines@2026-04-01' = {
+  name: baseName
   location: location
   properties: {
     hardwareProfile: {
       vmSize: size
     }
     osProfile: {
-      computerName: vmName
+      computerName: baseName
       adminUsername: username
       adminPassword: password
     }
@@ -71,9 +64,9 @@ resource vm 'Microsoft.Compute/virtualMachines@2026-04-01' = [ for (vmName, i) i
     }
     networkProfile: {
       networkInterfaces: [{
-        id: nics[i].id
+        id: nicId
         properties: {primary: true}
       }]
     }
   }
-}]
+}

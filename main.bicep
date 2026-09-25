@@ -8,6 +8,10 @@ param vmPassword string
 param deployBastion bool = false
 param deployLoadBalancer bool = false
 param ilb object
+param vnetTest object
+@secure()
+param vmTestPassword string
+param vmTest object
 
 //to vnet object einai to object tou param file pou exeis dilwsei aftoto main arxeio 
 //vnet.name einai to name tou object tou param poy to dineis sto vnet.bicep resource
@@ -71,3 +75,24 @@ module ilbr './bicepWithModules/modules/network/internalLb.bicep' = if (deployLo
       subnetId:devvnet.outputs.subnetWebId
    }
 }
+module vnetTestt 'bicepWithModules/modules/network/vnetTest.bicep' = {
+  name: 'dev-netTest'
+  params: { 
+    name: vnetTest.name
+    location: location
+    addressPrefixes: vnetTest.addressPrefixes
+    subnets: vnetTest.subnets
+  }
+}
+module vmTestt 'bicepWithModules/modules/vm/vmTest.bicep' = {
+  name: 'dev_vmTest'
+  params: {
+    baseName: vmTest.baseName
+    location: location
+    size: vmTest.size
+    username: vmTest.username
+    password: vmTestPassword
+    nicId: vnetTestt.outputs.nicid
+  }
+}
+

@@ -22,7 +22,7 @@ param probeName string = 'hp-http-80'
 @description('LB rule name')
 param ruleName string = 'lbr-http-80'
 
-resource lb 'Microsoft.Network/loadBalancers@2024-03-01' = {
+resource lb 'Microsoft.Network/loadBalancers@2025-09-01' = {
 name: lbName
   location: location
   sku: { name: 'Standard' }
