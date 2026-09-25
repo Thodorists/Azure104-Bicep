@@ -2,6 +2,7 @@ using '../main.bicep'
 
 param location = 'polandcentral'
 param deployBastion = false
+param deployLoadBalancer = false
 
 param vnet = {
   name: 'vnet1'
@@ -96,3 +97,12 @@ param vmPassword = az.getSecret(
   'project-az104',
   'WindowsMachine'
 )
+
+param ilb = {
+  name: 'internal-lb-az104'
+  feName: 'fe-ilb-01'
+  beName: 'be-ilb-01'
+  probeName: 'hp-http-80'
+  probePath: '/'
+  ruleName: 'lbr-http-80'
+}

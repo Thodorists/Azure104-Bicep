@@ -43,3 +43,9 @@ output bastionSubnetId string = resourceId(
   vnet.name,
   'AzureBastionSubnet'
 )
+/*output subnetIds array = [ 
+  for s in subnets:{
+    name: s.name
+    id:resourceId('Microsoft.Network/virtualNetworks/subnets', name, s.name)
+  }
+]*/

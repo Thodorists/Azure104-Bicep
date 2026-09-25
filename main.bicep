@@ -6,6 +6,8 @@ param vm object
 @secure()
 param vmPassword string
 param deployBastion bool = false
+param deployLoadBalancer bool = false
+param ilb object
 
 //to vnet object einai to object tou param file pou exeis dilwsei aftoto main arxeio 
 //vnet.name einai to name tou object tou param poy to dineis sto vnet.bicep resource
@@ -58,4 +60,13 @@ module Bastion 'bicepWithModules/modules/bastion/bastion.bicep' = if (deployBast
     location: location
     bastionSubnetId: devvnet.outputs.bastionSubnetId
   }
+}
+
+module ilbr './bicepWithModules/modules/network/internalLb.bicep' = if (deployLoadBalancer) { 
+   name: 'ilb'
+   params: { 
+      location:location
+      lbName: ilb.name
+      subnetId:devvnet.outputs.subnetWebId
+   }
 }
