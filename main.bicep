@@ -51,6 +51,7 @@ module Vm 'bicepWithModules/modules/vm/vm.bicep' = {
     password: vmPassword
     count: vm.count
     subnetId: devvnet.outputs.subnetWebId
+    lbBackendPoolId: ilbr.outputs.backendPoolId
   }
 }
 

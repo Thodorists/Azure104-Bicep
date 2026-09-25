@@ -20,6 +20,8 @@ param count int
 @description('target subnet id ')
 param subnetId string
 
+param lbBackendPoolId string
+
 var indexes = [for i in range(1,count):i]
 var vmNames = [for i in indexes: 'vm-${baseName}-${i}']
 var nicNames = [for i in indexes: 'nic-${baseName}-${i}']
@@ -35,6 +37,9 @@ resource nics 'Microsoft.Network/networkInterfaces@2025-09-01' = [for (nicName, 
         subnet: {
           id: subnetId 
         }
+        loadBalancerBackendAddressPools:[
+          {id:lbBackendPoolId}
+        ]
       }
     }]
   }
