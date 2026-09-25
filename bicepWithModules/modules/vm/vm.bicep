@@ -62,7 +62,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2026-04-01' = [ for (vmName, i) i
     osDisk: {
       createOption: 'FromImage'
       managedDisk: {
-        storageAccountType: 'Premium_LRS'
+        storageAccountType: 'Standard_LRS'
         }
       }
     }

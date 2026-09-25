@@ -1,6 +1,7 @@
 using '../main.bicep'
 
 param location = 'polandcentral'
+param deployBastion = false
 
 param vnet = {
   name: 'vnet1'
@@ -15,6 +16,10 @@ param vnet = {
     {
       name: 'subnetDb'
       prefix: '10.0.1.0/24'
+    }
+      {
+      name: 'AzureBastionSubnet'
+      prefix: '10.0.3.0/26'
     }
   ]
 }
@@ -58,6 +63,19 @@ param nsg = {
         sourceAddressPrefix: 'Internet'
         sourcePortRange: '*'
         destinationAddressPrefix: '10.0.1.4'
+      }
+    }
+    {
+      name: 'allow-http'
+      properties: {
+        priority: 110
+        protocol: 'Tcp'
+        access: 'Allow'
+        direction: 'Inbound'
+        destinationPortRange: '443'
+        sourceAddressPrefix: 'Internet'
+        sourcePortRange: '*'
+        destinationAddressPrefix: '10.0.3.0/26'
       }
     }
   ]

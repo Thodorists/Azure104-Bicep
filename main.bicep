@@ -5,6 +5,7 @@ param nsg object
 param vm object
 @secure()
 param vmPassword string
+param deployBastion bool = false
 
 //to vnet object einai to object tou param file pou exeis dilwsei aftoto main arxeio 
 //vnet.name einai to name tou object tou param poy to dineis sto vnet.bicep resource
@@ -51,3 +52,10 @@ module Vm 'bicepWithModules/modules/vm/vm.bicep' = {
   }
 }
 
+module Bastion 'bicepWithModules/modules/bastion/bastion.bicep' = if (deployBastion) {
+  name: 'dev-bastion'
+  params: {
+    location: location
+    bastionSubnetId: devvnet.outputs.bastionSubnetId
+  }
+}

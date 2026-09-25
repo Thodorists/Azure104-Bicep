@@ -22,7 +22,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2025-09-01' = {
       for subnet in subnets : {
         name: subnet.name
         properties: {
-          networkSecurityGroup:{id: nsg.id}
+          networkSecurityGroup: (subnet.name == 'AzureBastionSubnet') ? null : { id: nsg.id }
           addressPrefix: subnet.prefix
         }
       }
@@ -37,4 +37,9 @@ output subnetWebId string = resourceId(
   'Microsoft.Network/virtualNetworks/subnets',
   vnet.name,
   'subnetWeb'
+)
+output bastionSubnetId string = resourceId(
+  'Microsoft.Network/virtualNetworks/subnets',
+  vnet.name,
+  'AzureBastionSubnet'
 )
