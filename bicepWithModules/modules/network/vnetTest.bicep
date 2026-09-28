@@ -46,3 +46,5 @@ output subnetTest string = resourceId(
   'subnetTest'
 )
 output nicid string = nic.id
+
+output remoteVnetId string = vnetTest.id

@@ -134,3 +134,7 @@ param vmTestPassword = az.getSecret(
   'WindowsMachine'
 )
 
+/*param remoteVnet = { 
+  localvnetname: 'vnet1'
+  remotevnetname: 'vnetTest'
+}*/

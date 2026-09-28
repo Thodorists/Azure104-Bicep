@@ -12,6 +12,7 @@ param vnetTest object
 @secure()
 param vmTestPassword string
 param vmTest object
+//param remoteVnet object
 
 //to vnet object einai to object tou param file pou exeis dilwsei aftoto main arxeio 
 //vnet.name einai to name tou object tou param poy to dineis sto vnet.bicep resource
@@ -22,7 +23,7 @@ module devvnet 'bicepWithModules/modules/network/vnet.bicep' = {
     location: location
     addressPrefixes: vnet.addressPrefixes
     subnets: vnet.subnets
-    nsgName: nsg.name
+    nsgId: Nsg.outputs.nsgId
   }
 }
 
@@ -96,3 +97,12 @@ module vmTestt 'bicepWithModules/modules/vm/vmTest.bicep' = {
   }
 }
 
+module vnetpeering 'bicepWithModules/modules/network/vnetPeering.bicep' = { 
+  name: 'dev-vnetTest'
+  params: { 
+    localVnetId: devvnet.outputs.localvnetId
+    remoteVnetId: vnetTestt.outputs.remoteVnetId
+    localVnetName: vnet.name
+    remoteVnetName: vnetTest.name
+  }
+}

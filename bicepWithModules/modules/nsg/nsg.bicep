@@ -16,5 +16,5 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2025-09-01' ={
     securityRules: securityRules
     }
 }
-
+output nsgId string = nsg.id
 

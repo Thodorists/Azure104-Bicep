@@ -11,7 +11,7 @@ param addressPrefixes array
 param subnets array
 
 @description('name of nsg')
-param nsgName string
+param nsgId string
 
 
 resource vnet 'Microsoft.Network/virtualNetworks@2025-09-01' = {
@@ -23,15 +23,12 @@ resource vnet 'Microsoft.Network/virtualNetworks@2025-09-01' = {
       for subnet in subnets : {
         name: subnet.name
         properties: {
-          networkSecurityGroup: (subnet.name == 'AzureBastionSubnet') ? null : { id: nsg.id }
+          networkSecurityGroup: (subnet.name == 'AzureBastionSubnet') ? null : { id: nsgId }
           addressPrefix: subnet.prefix
         }
       }
     ]
   }
-}
-resource nsg 'Microsoft.Network/networkSecurityGroups@2025-09-01' existing = {
-  name: nsgName
 }
 
 output subnetWebId string = resourceId(
@@ -51,3 +48,4 @@ output bastionSubnetId string = resourceId(
   }
 ]*/
 
+output localvnetId string = vnet.id
